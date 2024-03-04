@@ -16,10 +16,26 @@ class Stokk :
         self.head = None
     def kriet(self, warna,ukuran,stok,harga,jeniskelamin):
         node_baru  = Node(Baju(warna,ukuran,stok,harga,jeniskelamin ))
-        keriet = input("Mau menambah node dari depan/belakang : ")
+        keriet = input("Mau menambah node dari depan/tengah/belakang : ")
         if keriet == "depan" :
             node_baru.next = self.head 
             self.head = node_baru
+        elif keriet == "tengah":
+            tambahnomor = int(input ("Mau tambah di nomor berapa : "))
+            pilihan = tambahnomor - 1
+            if pilihan < 0 :
+                print ("Pilihan tidak tersedia")
+            else :
+                index = 0
+                noderil = self.head
+                while noderil is not None and index < pilihan :
+                    noderil = noderil.next
+                    index =+ 1
+                    if noderil is not None:
+                        node_baru.next = noderil.next
+                        noderil.next = node_baru
+                    else:
+                        print ("Data tidak ada")
         elif keriet == "belakang" :
             if self.head == None :
                 self.head = node_baru
@@ -28,14 +44,44 @@ class Stokk :
                 while noderil.next is not None:
                     noderil =  noderil.next
                 noderil.next = node_baru
+                print ("Baju berhasil dihapus")
         else :
             print ("Pilihan tidak tersedia")
     def delet(self):
-        if self.head == None : 
-            print ("Node Kosong")
-            pass
-        else:
-            self.head = self.head.next
+        hapus = input ("Mau hapus dari depan/tengah/belakang? : ")
+        if hapus == "depan":
+            if self.head == None : 
+                print ("Node Kosong")
+                pass
+            else:
+                self.head = self.head.next
+        if hapus == "tengah":
+            nohapus = int(input("Masukkan nomor baju yang mau dihapus : "))
+            ppp = nohapus - 1
+            if self.head is None:
+                print ("Node kosong")
+            else :
+                if nohapus == 1:
+                    self.head = self.head.next
+                else :
+                    noderil = self.head
+                    index = 0
+                    while noderil.next is not None and index < ppp :
+                        noderil = noderil.next
+                        index += 1
+                        if noderil.next is not None:
+                            hapusnode = noderil.next
+                            noderil.next = hapusnode.next
+                        else :
+                            print("Nomor baju tidak ditemukan")
+        if hapus == "belakang":
+            prev = None
+            noderil = self.head
+            while noderil.next is not None:
+                noderil = noderil.next
+                prev = noderil
+                noderil = noderil.next
+            prev.next = None
     def readd(self):
         noderil = self.head
         if noderil == None:
@@ -107,14 +153,7 @@ def main ():
         elif mau == 3:
             tes.updet()
         elif mau == 4:
-            print ("==================================================")
-            hapus = int(input ("Masukkan nomor baju yang ingin dihapus : "))
-            print ("==================================================")
-            if hapus >= 1 :
-                tes.delet()
-                print ("Data berhasil dihapus")
-            else :
-                print ("Silahkan input angka yang valid")
+            tes.delet()
         elif mau == 5:
             print ("Terimakasih sudah menggunakan program ini!")
             break
