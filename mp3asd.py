@@ -106,11 +106,11 @@ class Stokk:
                 elif apasih == "descending":
                     nodes.sort(key=lambda x: x.data.stok, reverse=True)
         self.head = nodes[0]
-        current = self.head
+        noderil = self.head
         for node in nodes[1:]:
-            current.next = node
-            current = current.next
-        current.next = None
+            noderil.next = node
+            noderil = noderil.next
+        noderil.next = None
 
     def readd(self):
         noderil = self.head
